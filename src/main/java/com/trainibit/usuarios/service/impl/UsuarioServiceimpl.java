@@ -25,5 +25,22 @@ public class UsuarioServiceimpl implements UsuarioService {
         return usuarioRepository.findById(id).get();
     }
 
+    @Override
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
 
+    @Override
+    public Usuario update(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if(usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+        }else{
+            throw  new RuntimeException("Usuario no existe");
+        }
+    }
 }
