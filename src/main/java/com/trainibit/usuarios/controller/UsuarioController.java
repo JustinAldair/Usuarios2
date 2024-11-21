@@ -1,17 +1,22 @@
 package com.trainibit.usuarios.controller;
 
 import com.trainibit.usuarios.entity.Usuario;
+import com.trainibit.usuarios.response.ApiErrorResponse;
+import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.hibernate.action.internal.EntityAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -21,7 +26,7 @@ public class UsuarioController {
 
 
     @GetMapping
-    public ResponseEntity<List<Usuario>>getUsuario(){
+    public ResponseEntity<List<UsuarioResponse>>getUsuario(){
 
         return ResponseEntity.ok(usuarioService.findAll());
     }
@@ -33,7 +38,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
         Usuario nuevoUsuario = usuarioService.save(usuario);
         //Codigo de estatus HTTP 201
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
@@ -50,16 +55,8 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-        try{
-            Usuario usuarioActualizado = usuarioService.update(id, usuario);
-            return ResponseEntity.ok(usuarioActualizado);
-
-        }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) throws IllegalAccessException {
+        Usuario usuarioActualizado = usuarioService.update(id, usuario);
+        return ResponseEntity.ok(usuarioActualizado);
     }
-
 }
-

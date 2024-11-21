@@ -1,10 +1,13 @@
 package com.trainibit.usuarios.service.impl;
 
 import com.trainibit.usuarios.entity.Usuario;
+import com.trainibit.usuarios.mapper.UsuarioMapper;
 import com.trainibit.usuarios.repository.UsuarioRepository;
+import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +19,8 @@ public class UsuarioServiceimpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public List<Usuario> findAll() {
-
-        return usuarioRepository.findAll();
+    public List<UsuarioResponse> findAll() {
+        return UsuarioMapper.mapEntityListToDTOList(usuarioRepository.findAll());
     }
 
     @Override
@@ -32,12 +34,13 @@ public class UsuarioServiceimpl implements UsuarioService {
     }
 
     @Override
-    public Usuario update(Long id, Usuario usuario){
+    public Usuario update(Long id, Usuario usuario) throws IllegalAccessException {
     if(usuarioRepository.existsById(id)) {
         usuario.setId(id);
         return usuarioRepository.save(usuario);
     }else{
-        throw  new EntityNotFoundException("Usuario con id" + id + " no encontrado");
+        throw
+        new IllegalAccessException("Usuario con id" + id + " no encontrado");
     }
 }
 
