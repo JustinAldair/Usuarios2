@@ -6,7 +6,7 @@ import com.trainibit.usuarios.response.UsuarioResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioMapper {
+public class  UsuarioMapper {
 
     public static UsuarioResponse mapEntityToDTO(Usuario usuario) {
         UsuarioResponse usuarioResponse = new UsuarioResponse();
@@ -16,10 +16,8 @@ public class UsuarioMapper {
             usuarioResponse.setEmail(usuario.getEmail());
             usuarioResponse.setPassword(usuario.getPassword());
             usuarioResponse.setBirthDate(usuario.getBirthDate());
-            usuarioResponse.setEdad(usuarioResponse.getEdad());
+            usuarioResponse.calcularEdad();
             return usuarioResponse;
-
-
     }
 
     public static List<UsuarioResponse> mapEntityListToDTOList(List<Usuario> usuarios) {

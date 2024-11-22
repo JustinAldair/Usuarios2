@@ -12,7 +12,3 @@ public class ApiErrorResponse {
         this.status = status;
     }
 }
-
-
-
-
