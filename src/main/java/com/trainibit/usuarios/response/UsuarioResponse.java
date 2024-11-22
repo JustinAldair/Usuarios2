@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Data
 public class UsuarioResponse {
@@ -26,4 +27,11 @@ public class UsuarioResponse {
     private LocalDate birthDate;
 
     private int edad;
+
+    // Método para calcular la edad
+    public void calcularEdad() {
+        if (birthDate != null) {
+            this.edad = Period.between(birthDate, LocalDate.now()).getYears();
+        }
+    }
 }
