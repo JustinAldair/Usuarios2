@@ -64,6 +64,35 @@ public class UsuarioController {
         }
     }
 
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Object> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+//        try {
+//            if (usuario.getName() == null || usuario.getName().isEmpty()) {
+//                return new ResponseEntity<>(new ApiErrorResponse(
+//                        "El nombre del usuario es obligatorio.",
+//                        HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+//            }
+//
+//            if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
+//                return new ResponseEntity<>(new ApiErrorResponse(
+//                        "El correo del usuario es obligatorio.",
+//                        HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+//            }
+//
+//            Usuario usuarioActualizado = usuarioService.update(id, usuario);
+//            return ResponseEntity.ok(usuarioActualizado);
+//
+//        } catch (EntityNotFoundException e) {
+//            // Si no se encuentra el usuario, lanzamos un error 404
+//            ApiErrorResponse errorResponse = new ApiErrorResponse(
+//                    "Recurso no encontrado: " + e.getMessage(),
+//                    HttpStatus.NOT_FOUND.value());
+//            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         try {
@@ -79,7 +108,7 @@ public class UsuarioController {
                         HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
             }
 
-            Usuario usuarioActualizado = usuarioService.update(id, usuario);
+            Usuario usuarioActualizado = usuarioService.update(id, usuarioRequest);
             return ResponseEntity.ok(usuarioActualizado);
 
         } catch (EntityNotFoundException e) {
