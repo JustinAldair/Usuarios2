@@ -12,8 +12,12 @@ public interface UsuarioService {
     List<UsuarioResponse> findAll();
     Usuario findById(Long id);
     Usuario save(Usuario usuario);
-//    Usuario update(Long id, Usuario usuario) throws IllegalAccessException;
-    Usuario update(Long id, UsuarioRequest UsuarioActualizado) throws IllegalAccessException;
-    
+    Usuario update(Long id, Usuario updateUsuario) throws IllegalAccessException;
+    //Usuario update(Long id, UsuarioRequest UsuarioActualizado) throws IllegalAccessException;
+
+
     void deleteById(Long id);
+
+
+
 }

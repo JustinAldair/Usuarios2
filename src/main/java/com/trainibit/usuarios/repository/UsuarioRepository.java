@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public interface UsuarioRepository extends AuditableRepository<Usuario, Long> {
+
+
     @Override
     default void deleteById(Long id) {
         Usuario entity = findById(id).orElseThrow(()-> new RuntimeException("ID no found"));
@@ -22,4 +25,7 @@ public interface UsuarioRepository extends AuditableRepository<Usuario, Long> {
         save(entity);
         return entity;
     }
+
+    List<Usuario> findByActiveTrue();
 }
+

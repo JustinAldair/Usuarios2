@@ -106,7 +106,7 @@ public class UsuarioController {
                         HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
             }
 
-            Usuario usuarioActualizado = usuarioService.update(id, usuarioRequest);
+            Usuario usuarioActualizado = usuarioService.update(id, usuario);
             return ResponseEntity.ok(usuarioActualizado);
 
         } catch (EntityNotFoundException e) {
