@@ -40,7 +40,7 @@ public class Usuario {
     private String password;
 
     @NotNull
-    @Column(name = "birthday", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
 

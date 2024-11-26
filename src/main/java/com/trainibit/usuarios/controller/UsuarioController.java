@@ -39,8 +39,6 @@ public class UsuarioController {
        return ResponseEntity.ok(usuarioResponses);
    }
 
-
-
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id){
         Usuario usuario = usuarioService.findById(id);
@@ -92,5 +90,4 @@ public class UsuarioController {
             throw new RuntimeException(e);
         }
     }
-
 }
