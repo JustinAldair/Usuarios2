@@ -3,14 +3,17 @@ package com.trainibit.usuarios.service.impl;
 import com.trainibit.usuarios.entity.Usuario;
 import com.trainibit.usuarios.mapper.UsuarioMapper;
 import com.trainibit.usuarios.repository.UsuarioRepository;
+import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsuarioServiceimpl implements UsuarioService {
@@ -20,31 +23,20 @@ public class UsuarioServiceimpl implements UsuarioService {
 
     @Override
     public List<UsuarioResponse> findAll() {
-        List<Usuario> usuariosActivos = usuarioRepository.findByActiveTrue();
-        //return UsuarioMapper.mapEntityListToDTOList(usuarioRepository.findAll());
-        return UsuarioMapper.mapEntityListToDTOList(usuariosActivos);
+
+        return UsuarioMapper.mapEntityListToDTOList(usuarioRepository.findAll());
     }
 
     @Override
-    public Usuario findById(Long id) {
-        return usuarioRepository.findById(id).get();
+    public UsuarioResponse findById(UUID uuid) {
+        return UsuarioMapper.mapEntityToDTO(usuarioRepository.findByUuid(uuid).get());
     }
 
     @Override
-    public Usuario save(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioResponse save(UsuarioRequest usuario) {
+        return UsuarioMapper.mapEntityToDTO(usuarioRepository.save(UsuarioMapper.mapRequestToEntity(usuario)));
     }
 
-    //    @Override
-//    public Usuario update(Long id, Usuario usuario) throws IllegalAccessException {
-//    if(usuarioRepository.existsById(id)) {
-//        usuario.setId(id);
-//        return usuarioRepository.save(usuario);
-//    }else{
-//        throw
-//        new IllegalAccessException("Usuario con id" + id + " no encontrado");
-//    }
-//}
     @Override
     public Usuario update(Long id, Usuario updateUsuario) throws IllegalAccessException {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() ->
@@ -64,7 +56,8 @@ public class UsuarioServiceimpl implements UsuarioService {
     @Override
     public void deleteById(Long id) {
         if (usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteById(id);
+//            usuarioRepository.deleteById(id);
+            usuarioRepository.deleteByIdActive(id);
         } else {
             throw new EntityNotFoundException("Usuario con id " + id + " no encontrado");
         }

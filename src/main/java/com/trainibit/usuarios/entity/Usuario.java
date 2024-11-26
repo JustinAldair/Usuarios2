@@ -11,19 +11,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "usuarios")
-
-
 public class Usuario extends AuditableRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -31,17 +29,20 @@ public class Usuario extends AuditableRecord {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotNull
+
     @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
+
     @Column(name = "password", nullable = false)
     private String password;
 
-    @NotNull
-    @Column(name = "birth_date", nullable = false)
+
+    @Column(name = "birthday", nullable = false)
     private LocalDate birthDate;
+
+    @Column(name = "uuid")
+    private UUID uuid;
 
 
 }

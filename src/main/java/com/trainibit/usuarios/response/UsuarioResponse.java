@@ -9,12 +9,10 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.UUID;
 
 @Data
 public class UsuarioResponse {
-
-
-    private Long id;
 
     private String name;
 
@@ -27,8 +25,10 @@ public class UsuarioResponse {
     private LocalDate birthDate;
 
     private int edad;
+    
+    private UUID uuid;
 
-    // Método para calcular la edad
+
     public void calcularEdad() {
         if (birthDate != null) {
             this.edad = Period.between(birthDate, LocalDate.now()).getYears();

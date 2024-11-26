@@ -1,0 +1,4 @@
+INSERT INTO public.usuarios (last_name, email, "password", birthday, "name", created_at, updated_at, active) VALUES('Luna', 'fake2', '1234', '2002-04-24', 'Aldair', '2024-11-26 12:24:53.796', '2024-11-26 12:26:18.704', true);
+INSERT INTO public.usuarios (last_name, email, "password", birthday, "name", created_at, updated_at, active) VALUES('Vazquez', 'fake2', '1234', '2002-04-24', 'Justin', '2024-11-26 12:24:53.796', '2024-11-26 12:26:18.704', true);
+INSERT INTO public.usuarios (last_name, email, "password", birthday, "name", created_at, updated_at, active) VALUES('Garza', 'fake2', '1234', '2002-04-24', 'Lalito', '2024-11-26 12:24:53.796', '2024-11-26 12:26:18.704', true);
+INSERT INTO public.usuarios (last_name, email, "password", birthday, "name", created_at, updated_at, active) VALUES('Garza', 'fake2', '1234', '2002-04-24', 'Lalito', '2024-11-26 12:24:53.796', '2024-11-26 12:26:18.704', true);
