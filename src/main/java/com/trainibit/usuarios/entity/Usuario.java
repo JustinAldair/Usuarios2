@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Table(name = "usuarios")
 
 
-public class Usuario {
+public class Usuario extends AuditableRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

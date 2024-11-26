@@ -33,16 +33,28 @@ public class UsuarioServiceimpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    @Override
-    public Usuario update(Long id, Usuario usuario) throws IllegalAccessException {
+//    @Override
+//    public Usuario update(Long id, Usuario usuario) throws IllegalAccessException {
+//    if(usuarioRepository.existsById(id)) {
+//        usuario.setId(id);
+//        return usuarioRepository.save(usuario);
+//    }else{
+//        throw
+//        new IllegalAccessException("Usuario con id" + id + " no encontrado");
+//    }
+//}
+@Override
+public Usuario update(Long id, Usuario updateUsuario) throws IllegalAccessException {
+        Usuario usuario = usuarioRepository.findById(id).get();
     if(usuarioRepository.existsById(id)) {
         usuario.setId(id);
         return usuarioRepository.save(usuario);
     }else{
         throw
-        new IllegalAccessException("Usuario con id" + id + " no encontrado");
+                new IllegalAccessException("Usuario con id" + id + " no encontrado");
     }
 }
+
 
     @Override
     public void deleteById(Long id) {
