@@ -18,8 +18,8 @@ public class AuditableRecord {
     private Timestamp updatedDate;
 
     @ColumnDefault("true")
-    @Column(name = "active")
-    private boolean active = false;
+    @Column(name = "active", nullable = false)
+    private Boolean active;
 
     public Timestamp getCreatedDate() {
         return createdDate;

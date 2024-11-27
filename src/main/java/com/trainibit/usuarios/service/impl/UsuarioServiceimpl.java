@@ -57,10 +57,10 @@ public class UsuarioServiceimpl implements UsuarioService {
 
     @Override
     public void deleteById(Long id) {
-        if (usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteByIdActive(id);
-        } else {
+        if (!usuarioRepository.existsById(id)) {
             throw new EntityNotFoundException("Usuario con id " + id + " no encontrado");
         }
+        usuarioRepository.deleteByIdActive(id);
     }
+
 }

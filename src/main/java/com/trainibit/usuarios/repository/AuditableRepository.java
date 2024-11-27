@@ -10,6 +10,4 @@ public interface AuditableRepository<T, ID> extends JpaRepository<T, ID> {
 
     void deleteByIdActive (ID id);
     T  updateAudit (T t);
-
-
 }

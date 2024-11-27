@@ -18,7 +18,7 @@ public interface UsuarioRepository extends AuditableRepository<Usuario, Long> {
 
     @Override
     default void deleteById(Long id) {
-        Usuario entity = findById(id).orElseThrow(()-> new RuntimeException("ID no found"));
+        Usuario entity = findById(id).orElseThrow(()-> new RuntimeException("ID no encontrado"));
         entity.setActive(false);
         save(entity);
     }
@@ -26,8 +26,8 @@ public interface UsuarioRepository extends AuditableRepository<Usuario, Long> {
     @Override
     default Usuario updateAudit(Usuario entity) {
         entity.setUpdatedDate(Timestamp.from(Instant.now()));
-        save(entity);
-        return entity;
+
+        return save(entity);
     }
 
     Optional<Usuario> findByUuid(UUID uuid);
