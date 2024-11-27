@@ -31,7 +31,6 @@ public class UsuarioController {
 
    @GetMapping
    public ResponseEntity<List<UsuarioResponse>> getUsuario() {
-//       List<UsuarioResponse> usuarioResponses = usuarioService.findAll(); // Directamente desde el servicio
        return ResponseEntity.ok(usuarioService.findAll());
    }
 
@@ -55,51 +54,22 @@ public class UsuarioController {
         }
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Object> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-//        try {
-//            if (usuario.getName() == null || usuario.getName().isEmpty()) {
-//                return new ResponseEntity<>(new ApiErrorResponse(
-//                        "El nombre del usuario es obligatorio.",
-//                        HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
-//            }
-//
-//            if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-//                return new ResponseEntity<>(new ApiErrorResponse(
-//                        "El correo del usuario es obligatorio.",
-//                        HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
-//            }
-//
-//            Usuario usuarioActualizado = usuarioService.update(id, usuario);
-//            return ResponseEntity.ok(usuarioActualizado);
-//
-//        } catch (EntityNotFoundException e) {
-//            // Si no se encuentra el usuario, lanzamos un error 404
-//            ApiErrorResponse errorResponse = new ApiErrorResponse(
-//                    "Recurso no encontrado: " + e.getMessage(),
-//                    HttpStatus.NOT_FOUND.value());
-//            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-//        } catch (IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Object> updateUsuario(@PathVariable Long id, @Valid @RequestBody UsuarioRequest usuarioRequest) {
         try {
-            if (usuario.getName() == null || usuario.getName().isEmpty()) {
-                return new ResponseEntity<>(new ApiErrorResponse(
-                        "El nombre del usuario es obligatorio.",
-                        HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            if (usuarioRequest.getName() == null || usuarioRequest.getName().isEmpty()) {
+                return ResponseEntity.badRequest().body(
+                        new ApiErrorResponse("El nombre de usuario es obligatorio ", HttpStatus.BAD_REQUEST.value())
+                );
             }
 
-            if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-                return new ResponseEntity<>(new ApiErrorResponse(
-                        "El correo del usuario es obligatorio.",
-                        HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            if (usuarioRequest.getEmail() == null || usuarioRequest.getEmail().isEmpty()) {
+                return ResponseEntity.badRequest().body(
+                        new ApiErrorResponse("El correo del usuario es obligatorio.", HttpStatus.BAD_REQUEST.value())
+                );
             }
 
-            Usuario usuarioActualizado = usuarioService.update(id, usuario);
+            UsuarioResponse usuarioActualizado = usuarioService.update(id, usuarioRequest);
             return ResponseEntity.ok(usuarioActualizado);
 
         } catch (EntityNotFoundException e) {
@@ -107,9 +77,10 @@ public class UsuarioController {
             ApiErrorResponse errorResponse = new ApiErrorResponse(
                     "Recurso no encontrado: " + e.getMessage(),
                     HttpStatus.NOT_FOUND.value());
-            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        } catch (Exception e) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 }

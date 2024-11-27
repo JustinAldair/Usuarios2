@@ -38,9 +38,9 @@ public class UsuarioServiceimpl implements UsuarioService {
     }
 
     @Override
-    public Usuario update(Long id, Usuario updateUsuario) throws IllegalAccessException {
+    public UsuarioResponse update(Long id, UsuarioRequest updateUsuario){
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() ->
-                new IllegalAccessException("Usuario con id " + id + " no encontrado"));
+                new EntityNotFoundException("Usuario con id " + id + " no encontrado"));
 
         // Actualizar los campos del usuario con los del updateUsuario
         usuario.setName(updateUsuario.getName());
@@ -49,14 +49,15 @@ public class UsuarioServiceimpl implements UsuarioService {
         usuario.setPassword(updateUsuario.getPassword());
         usuario.setBirthDate(updateUsuario.getBirthDate());
 
-        return usuarioRepository.save(usuario);
+        Usuario usuarioActual = usuarioRepository.save(usuario);
+
+        return UsuarioMapper.mapEntityToDTO(usuarioActual);
     }
 
 
     @Override
     public void deleteById(Long id) {
         if (usuarioRepository.existsById(id)) {
-//            usuarioRepository.deleteById(id);
             usuarioRepository.deleteByIdActive(id);
         } else {
             throw new EntityNotFoundException("Usuario con id " + id + " no encontrado");

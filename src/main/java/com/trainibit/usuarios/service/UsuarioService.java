@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-@Service
 public interface UsuarioService {
     List<UsuarioResponse> findAll();
     UsuarioResponse findById(UUID uuid);
     UsuarioResponse save(UsuarioRequest usuario);
-    UsuarioResponse update(Long id, UsuarioRequest updateUsuario) throws IllegalAccessException;
+    UsuarioResponse update(Long id, UsuarioRequest updateUsuario);
 
     void deleteById(Long id);
 
