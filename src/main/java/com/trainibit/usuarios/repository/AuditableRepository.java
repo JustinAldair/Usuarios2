@@ -8,6 +8,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface AuditableRepository<T, ID> extends JpaRepository<T, ID> {
 
-    void deleteByIdActive (ID id);
+    void deleteByIdAndActiveTrue (ID id);
     T  updateAudit (T t);
 }

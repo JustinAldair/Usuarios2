@@ -43,6 +43,4 @@ public class Usuario extends AuditableRecord {
 
     @Column(name = "uuid")
     private UUID uuid;
-
-
 }

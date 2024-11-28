@@ -29,7 +29,7 @@ public class UsuarioServiceimpl implements UsuarioService {
 
     @Override
     public UsuarioResponse findById(UUID uuid) {
-        return UsuarioMapper.mapEntityToDTO(usuarioRepository.findByUuid(uuid).get());
+        return UsuarioMapper.mapEntityToDTO(usuarioRepository.findByUuidAndActiveTrue(uuid).get());
     }
 
     @Override
@@ -56,11 +56,16 @@ public class UsuarioServiceimpl implements UsuarioService {
 
 
     @Override
-    public void deleteById(Long id) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Usuario con id " + id + " no encontrado");
-        }
-        usuarioRepository.deleteByIdActive(id);
-    }
+//    public void deleteById(Long id) {
+//        if (!usuarioRepository.existsById(id)) {
+//            throw new EntityNotFoundException("Usuario con id " + id + " no encontrado");
+//        }
+//        usuarioRepository.deleteByIdAndActiveTrue(id);
 
+
+    @Override
+    public UsuarioResponse deleteById(UUID uuid) {
+
+    }
+}
 }
