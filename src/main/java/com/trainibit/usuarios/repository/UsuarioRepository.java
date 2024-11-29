@@ -41,7 +41,6 @@ Optional<Usuario> findByUuidAndActiveTrue(UUID uuid);
         return save(entity);
     }
 
-
     List<Usuario> findByActiveTrue();
 }
 

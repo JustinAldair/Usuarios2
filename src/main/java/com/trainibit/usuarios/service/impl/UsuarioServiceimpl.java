@@ -38,9 +38,9 @@ public class UsuarioServiceimpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponse update(Long id, UsuarioRequest updateUsuario){
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Usuario con id " + id + " no encontrado"));
+    public UsuarioResponse update(UUID uuid, UsuarioRequest updateUsuario){
+        Usuario usuario = usuarioRepository.findByUuidAndActiveTrue(uuid).orElseThrow(() ->
+                new EntityNotFoundException("Usuario con id " + uuid + " no encontrado"));
 
         // Actualizar los campos del usuario con los del updateUsuario
         usuario.setName(updateUsuario.getName());
@@ -55,7 +55,7 @@ public class UsuarioServiceimpl implements UsuarioService {
     }
 
 
-    @Override
+//    @Override
 //    public void deleteById(Long id) {
 //        if (!usuarioRepository.existsById(id)) {
 //            throw new EntityNotFoundException("Usuario con id " + id + " no encontrado");
@@ -65,7 +65,14 @@ public class UsuarioServiceimpl implements UsuarioService {
 
     @Override
     public UsuarioResponse deleteById(UUID uuid) {
+        Usuario usuario = usuarioRepository.findByUuidAndActiveTrue(uuid).
+                orElseThrow(()-> new EntityNotFoundException("Usuario con id " + uuid + " no encontrado"));
 
+        //cambiar el estado de active segun boorado logico
+        usuario.setActive(false);
+
+        //Guardar   los cmabios en bd
+        Usuario usuarioActual = usuarioRepository.save(usuario);
+        return UsuarioMapper.mapEntityToDTO(usuarioActual);
     }
-}
 }

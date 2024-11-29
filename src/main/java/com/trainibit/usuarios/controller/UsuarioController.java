@@ -44,18 +44,18 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioRequest));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> deleteUsuario(@PathVariable UUID uuid) {
         try{
-            usuarioService.deleteById(id);
+            usuarioService.deleteById(uuid);
             return ResponseEntity.noContent().build();//204, eliminado correctamente
         }catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); //404 no enocntrado
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable Long id, @Valid @RequestBody UsuarioRequest usuarioRequest) {
+    @PutMapping("/{uuid}")
+    public ResponseEntity<Object> updateUsuario(@PathVariable UUID uuid, @Valid @RequestBody UsuarioRequest usuarioRequest) {
         try {
             if (usuarioRequest.getName() == null || usuarioRequest.getName().isEmpty()) {
                 return ResponseEntity.badRequest().body(
@@ -69,7 +69,7 @@ public class UsuarioController {
                 );
             }
 
-            UsuarioResponse usuarioActualizado = usuarioService.update(id, usuarioRequest);
+            UsuarioResponse usuarioActualizado = usuarioService.update(uuid, usuarioRequest);
             return ResponseEntity.ok(usuarioActualizado);
 
         } catch (EntityNotFoundException e) {

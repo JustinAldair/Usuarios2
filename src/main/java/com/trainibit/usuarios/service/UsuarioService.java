@@ -14,9 +14,8 @@ public interface UsuarioService {
     List<UsuarioResponse> findAll();
     UsuarioResponse findById(UUID uuid);
     UsuarioResponse save(UsuarioRequest usuario);
-    UsuarioResponse update(Long id, UsuarioRequest updateUsuario);
-
-    void deleteById(Long id);
+    UsuarioResponse update(UUID uuid, UsuarioRequest updateUsuario);
+    UsuarioResponse deleteById(UUID uuid);
 
 
 
